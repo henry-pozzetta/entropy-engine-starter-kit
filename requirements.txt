@@ -1,0 +1,5 @@
+numpy>=2.0
+pandas>=2.2
+plotly>=5.20
+dash>=2.14
+pyyaml>=6.0
