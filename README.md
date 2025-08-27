@@ -11,11 +11,6 @@ See the **shape of chaos** in your data stream. This one-click kit spins up:
 
 **Roadmap**: We’re iterating in small, tagged releases. See **[docs/ROADMAP.md](docs/ROADMAP.md)**.
 
-```bash
-git clone https://github.com/henry-pozzetta/entropy-engine-starter-kit.git
-cd entropy-engine-starter-kit
-python run-demo.py
-
 # Entropy Engine MVP — TimeFund Edition
 
 [![Release](https://img.shields.io/github/v/release/OWNER/REPO?label=release)](https://github.com/OWNER/REPO/releases)
