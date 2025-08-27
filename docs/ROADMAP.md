@@ -1,7 +1,3 @@
-love it — here’s a concrete, ship-ready plan to make your GitHub repo a **one-click / one-command** experience and a smooth collaboration hub. It’s organized as workstreams with checklists, drop-in files, and a short timeline. You can copy this into `docs/DELIVERY_PLAN.md` and start checking boxes.
-
----
-
 # North-Star User Journey (what we optimize)
 
 1. Land on repo → **see one big Quickstart**.
@@ -275,6 +271,3 @@ CHANGELOG.md
 
 If any step fails, open a blocking issue tagged `install-blocker`.
 
----
-
-If you like, I can turn this into a PR that adds all the docs/templates/workflows and stub installer scripts so you can merge and start tagging releases immediately.
