@@ -10,7 +10,12 @@ See the **shape of chaos** in your data stream. This one-click kit spins up:
 [EE MVP PoC Demo — CLI User Guide](docs/CLI_GUIDE.md)
 
 
+
 ```bash
 git clone https://github.com/henry-pozzetta/entropy-engine-starter-kit.git
 cd entropy-engine-starter-kit
 python run-demo.py
+
+
+> **Roadmap**: We’re iterating in small, tagged releases. See **[docs/ROADMAP.md](docs/ROADMAP.md)**.
+
