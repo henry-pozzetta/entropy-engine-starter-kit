@@ -7,3 +7,6 @@ __pycache__/
 punch_list.txt
 .demo_pids.json
 *.zip
+
+.demo_pids.json
+*.zip
