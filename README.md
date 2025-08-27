@@ -6,6 +6,7 @@ See the **shape of chaos** in your data stream. This one-click kit spins up:
 - a 3D, rotatable browser view.
 
 ## Quickstart (Windows/macOS/Linux)
+<a id="quickstart"></a>
 
 [EE MVP PoC Demo — CLI User Guide](docs/CLI_GUIDE.md)
 
@@ -53,3 +54,6 @@ See the **shape of chaos** in your data stream. This one-click kit spins up:
 
 **Roadmap:** [docs/ROADMAP.md](docs/ROADMAP.md) • **Changelog:** [CHANGELOG.md](CHANGELOG.md) • **Troubleshooting:** [docs/troubleshooting.md](docs/troubleshooting.md)  
 **Code of Conduct:** [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) • **Security:** [SECURITY.md](SECURITY.md)
+
+## Table of Contents
+- [Quickstart](#quickstart)
