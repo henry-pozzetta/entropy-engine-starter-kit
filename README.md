@@ -23,24 +23,39 @@ See the **shape of chaos** in your data stream. This one-click kit spins up:
 
 ![Arrow of Information Entropy — labeled axes](docs/img/arrow-hero.gif)
 
-### Quickstart (pick your OS)
+<a id="quickstart"></a>
 
-**Windows**  
-1. Download `EE-MVP-Setup.exe` from the [latest release](https://github.com/OWNER/REPO/releases/latest)  
-2. Double-click → Run “Calm” profile  
-3. See the Arrow move → Done
+## Quickstart
 
-**macOS**  
-1. Download `.dmg` → drag app to Applications  
-2. Open app → allow Gatekeeper if prompted  
-3. Select a profile and watch the Arrow
+**Pick your OS** and be running in ~2 minutes.  
+Privacy: **Offline by default. No telemetry** leaves your machine unless you choose to submit results.
 
-**Linux**  
-1. `chmod +x EE-MVP.AppImage && ./EE-MVP.AppImage`  
-2. Pick a profile → watch the Arrow
+### Windows
+1. Download `EE-MVP-Setup.exe` from the **[latest release]**.
+2. Double-click → choose a profile (**Calm/Busy/Jammy**).
+3. Watch the live Arrow (H~, Y, Z).  
+   _If SmartScreen warns, click **More info → Run anyway** (we publish checksums in Releases)._
 
-> **Privacy Promise:** Offline by default. **No telemetry** leaves your machine unless you click **Submit Results**.  
-> **If it looks flat:** try `--viz-y-gain 1.8 --viz-z-gain 2.2`. **If it stutters:** try `--fps 20` or **Replay** a sample.
+### macOS
+1. Download the `.dmg` from the **[latest release]**.
+2. Drag the app into **Applications**.
+3. Open it. _If Gatekeeper blocks, right-click → **Open** once to approve._
+
+### Linux
+1. `chmod +x EE-MVP.AppImage && ./EE-MVP.AppImage`
+2. Pick a profile → watch the Arrow.
+
+> **Looks flat?** Try `--viz-y-gain 1.8 --viz-z-gain 2.2`.  
+> **Stutters?** Try `--fps 20` or use the built-in Replay.
+
+---
+
+### Prefer running from source? (fallback)
+```bash
+git clone https://github.com/henry-pozzetta/entropy-engine-starter-kit.git
+cd entropy-engine-starter-kit
+python run-demo.py   # or: ./run-demo.sh  (Linux/macOS)   |  ./run-demo.ps1  (Windows)
+
 
 ### What you’ll see (10 sec)
 - **X:** normalized entropy \( \tilde H \)  
@@ -57,3 +72,8 @@ See the **shape of chaos** in your data stream. This one-click kit spins up:
 
 ## Table of Contents
 - [Quickstart](#quickstart)
+
+
+[latest release]: https://github.com/henry-pozzetta/entropy-engine-starter-kit/releases/latest
+[Releases]: https://github.com/henry-pozzetta/entropy-engine-starter-kit/releases
+[Discussions → Results]: https://github.com/henry-pozzetta/entropy-engine-starter-kit/discussions

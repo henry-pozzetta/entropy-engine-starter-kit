@@ -1,0 +1,145 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>EE Scenario Player + Live (optional)</title>
+<style>
+  html,body{margin:0;height:100%;background:#0b0f16;color:#e8eef6;font:15px system-ui}
+  #bar{position:fixed;left:12px;top:12px;display:flex;gap:8px;align-items:center;z-index:2}
+  #hud{position:fixed;right:12px;top:12px;color:#9fb0c6;font:14px monospace}
+  #ticks{position:fixed;left:12px;bottom:12px;color:#9fb0c6;font:12px}
+  select,button{background:#1f2633;color:#e8eef6;border:1px solid #2a3446;border-radius:8px;padding:8px}
+  .pill{padding:6px 10px;border-radius:999px;border:1px solid #2a3446;background:#121825;color:#9fb0c6}
+  .ok{color:#71e3a1;border-color:#1d3e31}
+  .warn{color:#ffb86b;border-color:#4a341a}
+</style>
+<div id="bar">
+  <label>Scenario
+    <select id="sc">
+      <option value="scenarios/step.jsonl">Step change</option>
+      <option value="scenarios/bursts.jsonl">Bursts</option>
+      <option value="scenarios/drift.jsonl">Drift</option>
+    </select>
+  </label>
+  <button id="play">Play</button>
+  <button id="save">Save evaluation.jsonl</button>
+  <span id="live" class="pill warn">Live: disconnected</span>
+</div>
+<div id="hud">H~: — | Y: — | Z: —</div>
+<div id="ticks">Event ticks: —</div>
+<canvas id="c"></canvas>
+<script type="module">
+import * as THREE from "https://unpkg.com/three@0.158.0/build/three.module.js";
+
+// --- renderer & scene setup ---
+const canvas = document.getElementById('c');
+const renderer = new THREE.WebGLRenderer({canvas, antialias:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); // HiDPI friendly
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, 2, .1, 100);
+camera.position.set(2.6,1.8,3.2);
+
+const grid = new THREE.GridHelper(10,20,0x223042,0x1a2737); scene.add(grid);
+const axes = new THREE.AxesHelper(1.2); scene.add(axes);
+
+// --- geometry: dynamic line + head cone ---
+const MAX=600; // ~30s at 20 Hz
+const positions=new Float32Array(MAX*3);
+const colors=new Float32Array(MAX*3);
+const geo=new THREE.BufferGeometry();
+geo.setAttribute('position',new THREE.BufferAttribute(positions,3));
+geo.setAttribute('color',new THREE.BufferAttribute(colors,3));
+const line=new THREE.Line(geo,new THREE.LineBasicMaterial({vertexColors:true}));
+line.frustumCulled = false; // dynamic path can have stale bounds — skip culling
+scene.add(line);
+
+const headGeo=new THREE.ConeGeometry(0.06,0.18,24);
+headGeo.rotateX(Math.PI/2);
+const headMat=new THREE.MeshBasicMaterial({color:0xffffff, depthTest:false}); // keep visible over grid
+const head=new THREE.Mesh(headGeo, headMat);
+scene.add(head);
+
+// --- data + transforms ---
+const GAIN = { x: 2.4, y: 8.0, z: 8.0 }; // scale H,Y,Z → scene units
+const pts=[]; let evCount=0; 
+const hud=document.getElementById('hud');
+const tickEl=document.getElementById('ticks');
+
+function push(H, Y, Z){
+  // 1) map to scene coords with visible scale
+  const x = H * GAIN.x;
+  const y = Y * GAIN.y;
+  const z = Z * GAIN.z;
+
+  // 2) ensure we always have at least 2 points so a Line renders
+  const v = new THREE.Vector3(x, y, z);
+  if (pts.length === 0) pts.push(v.clone());
+  pts.push(v);
+  if (pts.length > MAX) pts.shift();
+
+  // 3) write positions for the active range
+  let i=0;
+  for (let p=0; p<pts.length; p++){
+    const q=pts[p];
+    positions[i++]=q.x; positions[i++]=q.y; positions[i++]=q.z;
+  }
+
+  // 4) simple volatility color (cool→warm) for the whole segment
+  const vol = Math.min(1, Math.abs(y)/4 + Math.abs(z)/4);
+  const r = vol, g = 0.5, b = 1 - vol;
+  for (let j=0; j<pts.length*3; j+=3){ colors[j]=r; colors[j+1]=g; colors[j+2]=b; }
+
+  // 5) publish buffer changes and keep bounds fresh
+  geo.setDrawRange(0, pts.length);
+  geo.attributes.position.needsUpdate = true;
+  geo.attributes.color.needsUpdate = true;
+  geo.computeBoundingSphere();
+
+  // 6) move the cone to the head
+  head.position.set(x, y, z);
+
+  // 7) HUD + event ticks
+  hud.textContent = `H~: ${H.toFixed(2)} | Y: ${Y>=0?'+':''}${Y.toFixed(2)} | Z: ${Z>=0?'+':''}${Z.toFixed(2)}`;
+  const tauY=0.25, tauZ=0.35;
+  if (Math.abs(Y)>tauY || Math.abs(Z)>tauZ){ evCount++; tickEl.textContent=`Event ticks: ${evCount}`; }
+}
+
+// --- resize & render loop ---
+function resize(){ const w=innerWidth,h=innerHeight; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix(); }
+addEventListener('resize',resize); resize();
+(function anim(){ requestAnimationFrame(anim); renderer.render(scene,camera); })();
+
+// --- Scenario Player ---
+async function loadScenario(url){
+  const resp=await fetch(url); const text=await resp.text();
+  return text.trim().split('
+').filter(Boolean).map(JSON.parse);
+}
+let current=[]; let idx=0; let timer=null;
+document.getElementById('play').onclick=async ()=>{
+  if(timer){ clearInterval(timer); timer=null; return; }
+  current = await loadScenario(document.getElementById('sc').value);
+  idx=0; pts.length=0; evCount=0; tickEl.textContent='Event ticks: —';
+  timer=setInterval(()=>{
+    if(idx>=current.length){ clearInterval(timer); timer=null; return; }
+    const {H,Y,Z}=current[idx++]; push(H,Y,Z);
+  }, 50); // 20 Hz
+};
+
+document.getElementById('save').onclick=()=>{
+  const ev = {"profile": document.getElementById('sc').selectedOptions[0].text,
+              "H_mean": current.length? (current.reduce((a,b)=>a+b.H,0)/current.length):null,
+              "Y_spike_events": evCount, "Z_spike_events": 0,
+              "lead_time_ms": null, "helpful": null};
+  const blob=new Blob([JSON.stringify(ev)+"
+"],{type:"application/jsonl"});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='evaluation.jsonl'; a.click();
+};
+
+// --- Live Local (optional): auto-detect WS and stream if available ---
+const liveEl=document.getElementById('live');
+try{
+  const ws=new WebSocket('ws://127.0.0.1:8765/');
+  ws.onopen = ()=>{ liveEl.textContent='Live: connected'; liveEl.classList.remove('warn'); liveEl.classList.add('ok'); };
+  ws.onmessage = ev=>{ try{ const {H,Y,Z}=JSON.parse(ev.data); push(H,Y,Z);}catch{} };
+  ws.onclose = ()=>{ liveEl.textContent='Live: disconnected'; liveEl.classList.add('warn'); liveEl.classList.remove('ok'); };
+}catch(e){ /* ignored */ }
+</script>

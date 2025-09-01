@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Entropy Engine — Information Kiosk</title>
+  <meta name="description" content="A neutral, math-first feedback layer. Links to Starter Kit, docs, and channels." />
+  <meta property="og:title" content="Entropy Engine — Information Kiosk" />
+  <meta property="og:description" content="Start here: Quickstart, Releases, Discussions, and channels." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#0ea5e9" />
+  <style>
+    :root{
+      --bg: #0b1220; /* deep slate */
+      --panel: #0f172a;
+      --ink: #e2e8f0;
+      --muted: #94a3b8;
+      --brand: #22d3ee; /* cyan */
+      --brand-2: #60a5fa; /* blue */
+      --ok: #34d399; /* green */
+      --radius: 18px;
+      --shadow: 0 10px 25px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--ink); background: radial-gradient(1200px 600px at 10% -10%, rgba(34,211,238,.25), transparent 60%), radial-gradient(1000px 500px at 90% -20%, rgba(96,165,250,.2), transparent 55%), var(--bg);
+    }
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:1100px; margin:0 auto; padding:32px}
+    header{
+      display:flex; align-items:center; gap:16px; justify-content:space-between; margin-bottom:24px
+    }
+    .brand{display:flex; align-items:center; gap:12px}
+    .logo{width:42px; height:42px; border-radius:12px; background: linear-gradient(135deg, var(--brand), var(--brand-2)); box-shadow: var(--shadow)}
+    .title{font-weight:700; letter-spacing:.3px}
+    .badge{font-size:12px; color:var(--muted); border:1px solid #1f2937; padding:6px 10px; border-radius:999px; backdrop-filter:saturate(140%)}
+
+    .hero{display:grid; grid-template-columns: 1.1fr .9fr; gap:24px; align-items:center; padding:28px; background:linear-gradient(180deg, rgba(15,23,42,.7), rgba(15,23,42,.5)); border:1px solid #1f2937; border-radius:var(--radius); box-shadow: var(--shadow)}
+    .hero h1{margin:0 0 8px; font-size:42px; line-height:1.1}
+    .hero p{margin:0; color:var(--muted)}
+    .cta{display:flex; gap:12px; margin-top:18px; flex-wrap:wrap}
+    .btn{padding:12px 16px; border-radius:12px; font-weight:600; display:inline-flex; align-items:center; gap:10px; border:1px solid #1f2937; background:#0b1220}
+    .btn.primary{background:linear-gradient(135deg, var(--brand), var(--brand-2)); color:#0b1220; border-color:transparent}
+    .btn:hover{transform:translateY(-1px); box-shadow:0 6px 14px rgba(0,0,0,.22)}
+    .btn .sm{font-size:12px; font-weight:600; opacity:.8}
+
+    .cards{display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; margin-top:24px}
+    .card{padding:18px; border-radius:16px; background:rgba(15,23,42,.7); border:1px solid #1f2937; box-shadow: var(--shadow); display:flex; flex-direction:column; gap:8px}
+    .card h3{margin:0; font-size:16px}
+    .card p{margin:0; color:var(--muted); font-size:14px}
+
+    .privacy{margin-top:24px; padding:14px 18px; border-radius:14px; background: rgba(34,197,94,.08); border:1px solid rgba(34,197,94,.35); color:#dcfce7}
+
+    footer{margin:28px 0 8px; color:var(--muted); font-size:13px; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap}
+
+    @media (max-width: 900px){
+      .hero{grid-template-columns: 1fr}
+      .cards{grid-template-columns: 1fr 1fr}
+    }
+    @media (max-width: 620px){
+      .cards{grid-template-columns: 1fr}
+      .hero h1{font-size:34px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div class="title">Entropy Engine</div>
+          <div class="badge" title="Minimum Viable Kiosk">MVP · Info Kiosk</div>
+        </div>
+      </div>
+      <nav class="cta">
+        <!-- TODO: replace # with your canonical links -->
+        <a class="btn" href="#" target="_blank" rel="noopener">Docs</a>
+        <a class="btn" href="#" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </header>
+
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <h1 id="hero-title">A neutral, math‑first feedback layer</h1>
+        <p>Start here to explore the Entropy Engine. Quickstart the Starter Kit, browse releases, ask questions, or chat with the EE Coach.</p>
+        <div class="cta">
+          <!-- Primary Calls to Action -->
+          <a class="btn primary" href="#" target="_blank" rel="noopener">
+            <span>GitHub Quickstart</span>
+          </a>
+          <a class="btn" href="#" target="_blank" rel="noopener">
+            <span>EE Coach GPT</span>
+            <span class="sm">(ask anything)</span>
+          </a>
+        </div>
+      </div>
+      <div aria-hidden="true">
+        <!-- Lightweight placeholder illustration -->
+        <svg viewBox="0 0 300 220" width="100%" height="220" role="img" aria-label="Arrow demo" style="border-radius:14px; background: linear-gradient(180deg, rgba(2,6,23,.5), rgba(15,23,42,.5)); border:1px solid #1f2937">
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#22d3ee"/>
+              <stop offset="100%" stop-color="#60a5fa"/>
+            </linearGradient>
+          </defs>
+          <g transform="translate(150,110)">
+            <line x1="-120" y1="0" x2="120" y2="0" stroke="#253044" stroke-width="1"/>
+            <line x1="0" y1="-80" x2="0" y2="80" stroke="#253044" stroke-width="1"/>
+            <line x1="-80" y1="60" x2="80" y2="-60" stroke="#253044" stroke-width="1"/>
+            <g id="arrow">
+              <line x1="0" y1="0" x2="70" y2="-30" stroke="url(#g1)" stroke-width="4"/>
+              <polygon points="70,-30 54,-24 60,-44" fill="url(#g1)" />
+            </g>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <section class="cards" aria-label="Destinations">
+      <a class="card" href="#" target="_blank" rel="noopener">
+        <h3>Releases</h3>
+        <p>Download the latest builds and Starter Kit bundles.</p>
+      </a>
+      <a class="card" href="#" target="_blank" rel="noopener">
+        <h3>Discussions</h3>
+        <p>Share results, ask questions, and propose ideas on GitHub.</p>
+      </a>
+      <a class="card" href="#" target="_blank" rel="noopener">
+        <h3>Blog</h3>
+        <p>Deep dives and essays on the Entropy Engine.</p>
+      </a>
+      <a class="card" href="#" target="_blank" rel="noopener">
+        <h3>Medium</h3>
+        <p>Short explainers and announcements.</p>
+      </a>
+      <a class="card" href="#" target="_blank" rel="noopener">
+        <h3>LinkedIn</h3>
+        <p>Company updates and professional posts.</p>
+      </a>
+      <a class="card" href="#" target="_blank" rel="noopener">
+        <h3>YouTube</h3>
+        <p>Demo videos, talks, and walkthroughs.</p>
+      </a>
+    </section>
+
+    <div class="privacy" role="note">
+      <strong>Privacy:</strong> Offline by default; no telemetry leaves your machine unless you submit results.
+    </div>
+
+    <footer>
+      <div>© <span id="yr"></span> Entropy Engine</div>
+      <div>MVP Kiosk · Static HTML · No cookies</div>
+    </footer>
+  </div>
+
+  <script>
+    // Set year
+    document.getElementById('yr').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

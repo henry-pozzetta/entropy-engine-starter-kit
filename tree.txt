@@ -1,0 +1,12 @@
+entropy-engine-starter-kit/
+├─ ee/
+│ ├─ __init__.py
+│ └─ stream.py
+├─ ws/
+│ └─ ee_stream_server.py
+├─ tools/
+│ ├─ make_scenarios.py
+│ └─ ee_bench.py
+└─ web/
+├─ index.html
+└─ scenarios/ # (created by make_scenarios.py)
