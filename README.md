@@ -54,7 +54,9 @@ Privacy: **Offline by default. No telemetry** leaves your machine unless you cho
 ```bash
 git clone https://github.com/henry-pozzetta/entropy-engine-starter-kit.git
 cd entropy-engine-starter-kit
-python run-demo.py   # or: ./run-demo.sh  (Linux/macOS)   |  ./run-demo.ps1  (Windows)
+# python run-demo.py   
+# or: ./run-demo.sh   (Linux/macOS)   
+# or: ./run-demo.ps1  (Windows)
 
 
 ### What you’ll see (10 sec)
