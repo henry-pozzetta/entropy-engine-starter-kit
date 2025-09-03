@@ -7,6 +7,7 @@ __pycache__/
 punch_list.txt
 .demo_pids.json
 *.zip
-
+.settings.json
 .demo_pids.json
 *.zip
+.vscode/settings.json
